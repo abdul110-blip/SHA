@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GitHub Test Page</title>
+  <meta name="description" content="A minimal test page to verify GitHub Pages is working." />
+  <!-- Tiny data URI favicon to avoid 404s on GitHub Pages -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧪%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #11172b;
+      --text: #e8edff;
+      --muted: #b5c2ff;
+      --brand: #6ea8fe;
+      --brand-strong: #4e84ff;
+      --ok: #4ade80;
+      --warn: #facc15;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f8ff;
+        --card: #ffffff;
+        --text: #0a1020;
+        --muted: #46508a;
+        --brand: #2f68ff;
+        --brand-strong: #2049c9;
+        --ok: #059669;
+        --warn: #a16207;
+        --shadow: 0 8px 20px rgba(0,0,0,.08);
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, Noto Sans, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 100% -10%, rgba(110,168,254,.15), transparent 60%),
+                  radial-gradient(1000px 900px at -10% 110%, rgba(110,168,254,.12), transparent 60%), var(--bg);
+      color: var(--text);
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 24px; }
+    header { padding: 48px 0 8px; }
+    h1 { font-size: clamp(28px, 5vw, 44px); margin: 0 0 8px; }
+    p.lead { color: var(--muted); margin: 0 0 24px; font-size: clamp(16px, 2.5vw, 20px); }
+    .card {
+      background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 20px; box-shadow: var(--shadow);
+    }
+    .row { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .k {
+      display: grid; gap: 6px; align-content: start; border-radius: 16px; padding: 16px; background: rgba(255,255,255,.02);
+      border: 1px dashed rgba(255,255,255,.12);
+    }
+    .k .label { font-weight: 600; opacity: .8; }
+    .k .value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    button {
+      appearance: none; border: none; background: linear-gradient(180deg, var(--brand), var(--brand-strong)); color: white;
+      padding: 12px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow);
+    }
+    button:active { transform: translateY(1px); }
+    .stack { display: grid; gap: 12px; }
+    pre { margin: 0; padding: 12px 14px; background: rgba(0,0,0,.35); border-radius: 12px; overflow: auto; }
+    footer { opacity: .7; font-size: 14px; padding: 32px 0 56px; }
+    a { color: var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🚀 Your GitHub Pages test is live</h1>
+      <p class="lead">If you can see this page, your repository and GitHub Pages setup are working. Use the checks below to verify HTML, CSS, and JavaScript.</p>
+    </header>
+
+    <main class="stack">
+      <section class="card">
+        <div class="row">
+          <div class="k">
+            <div class="label">Build time</div>
+            <div class="value" id="buildTime">(loading…)</div>
+          </div>
+          <div class="k">
+            <div class="label">User agent</div>
+            <div class="value" id="ua">(loading…)</div>
+          </div>
+          <div class="k">
+            <div class="label">JavaScript status</div>
+            <div class="value" id="jsStatus">(loading…)</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card stack">
+        <div>
+          <strong>Interactive test</strong>
+          <p>Click the button to run a quick check and write to the console. Open your browser devtools to see logs.</p>
+        </div>
+        <div>
+          <button id="pingBtn" type="button">Run Test</button>
+        </div>
+        <pre id="log" aria-live="polite">(no output yet)</pre>
+      </section>
+
+      <section class="card stack">
+        <strong>Next steps</strong>
+        <ul>
+          <li>Edit <code>&lt;title&gt;</code> and <code>&lt;meta name="description"&gt;</code> above.</li>
+          <li>Add other files (images, CSS/JS) and link to them relatively (e.g. <code>./styles.css</code>).</li>
+          <li>Commit and push to your repo; Pages will redeploy automatically.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      Made with ❤️ for quick testing • <a href="https://docs.github.com/en/pages" target="_blank" rel="noreferrer noopener">GitHub Pages docs</a>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const $ = (id) => document.getElementById(id);
+      const log = (msg) => {
+        const pre = $("log");
+        pre.textContent = String(msg) + "\n" + pre.textContent;
+        console.log("[Test]", msg);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        $("buildTime").textContent = new Date().toLocaleString();
+        $("ua").textContent = navigator.userAgent;
+        $("jsStatus").textContent = "✅ Running";
+      });
+
+      $("pingBtn").addEventListener("click", async () => {
+        log("Button clicked — starting checks…");
+        try {
+          // Simple fetch to your own page to verify network works on Pages
+          const res = await fetch(location.href, { method: "HEAD", cache: "no-store" });
+          log(`HEAD ${res.url} → ${res.status}`);
+          if (res.ok) {
+            log("✅ Network check passed");
+          } else {
+            log("⚠️ Network check returned non-OK status");
+          }
+        } catch (err) {
+          log("❌ Network check failed: " + err.message);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
